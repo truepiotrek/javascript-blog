@@ -28,7 +28,7 @@ function titleClickHandler(event){
 
   /* [DONE] get 'href' attribute from the clicked link */
 
-  const articleSelector = clickedElement.getAttribute("href");
+  const articleSelector = clickedElement.getAttribute('href');
   console.log(articleSelector);
 
   /* [DONE] find the correct article using the selector (value of 'href' attribute) */
@@ -84,8 +84,8 @@ function generateTitleLinks(){
   console.log(links);
 
   for(let link of links){
-  link.addEventListener('click', titleClickHandler);
-}
+    link.addEventListener('click', titleClickHandler);
+  }
 }
 
 generateTitleLinks();
