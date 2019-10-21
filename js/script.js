@@ -45,10 +45,10 @@ const optArticleSelector = '.post',
 const optArticleTagSelector = '.post-tags .list';
 
 
-function generateTitleLinks(){
+function generateTitleLinks(customSelector = ''){
 
   /* remove contents of titleList */
-  const titleList = document.querySelector(optTitleListSelector);
+  const titleList = document.querySelector(optTitleListSelector + customSelector);
   titleList.innerHTML = '';
   
   let html='';
@@ -68,10 +68,8 @@ function generateTitleLinks(){
 
     /* create HTML of the link */
     const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
-    // console.log(linkHTML);
 
     /* insert link into titleList */
-    // titleList.insertAdjacentHTML('beforebegin', linkHTML);
     html = html + linkHTML;
   
   }
@@ -141,28 +139,44 @@ function tagClickHandler(event){
 
   /* find all tag links with class active */
   const activeTagLinks = tag.querySelectorAll('a.active[href^="#tag-"]');
+
   /* START LOOP: for each active tag link */
   for(let activeTagLink of activeTagLinks){
+
     /* remove class active */
     activeTagLink.classList.remove('active');
+
   /* END LOOP: for each active tag link */
   }
+
   /* find all tag links with "href" attribute equal to the "href" constant */
   const activeLinks = document.querySelectorAll('a[href="' + href + '"]');
+
   /* START LOOP: for each found tag link */
   for(let activeLink of activeLinks){
     
     /* add class active */
     activeLink.classList.add('active');
+
   /* END LOOP: for each found tag link */
   }
   /* execute function "generateTitleLinks" with article selector as argument */
+  generateTitleLinks('[data-tags~="' + tag + '"]');
 }
-generateTitleLinks ();
+
+
+
 function addClickListenersToTags(){
   /* find all links to tags */
+  const articleLinks = document.querySelectorAll('a.data-tags');
+
   /* START LOOP: for each link */
+  for(let articleLink of articleLinks){
+
     /* add tagClickHandler as event listener for that link */
+    articleLink.addEventListener(tagClickHandler);
+
   /* END LOOP: for each link */
+  }
 }
 addClickListenersToTags();
