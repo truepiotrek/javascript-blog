@@ -4,7 +4,6 @@ function titleClickHandler(event){
   event.preventDefault();
   const clickedElement = this;  
   
-
   /* [DONE] remove class 'active' from all article links  */
 
   const activeLinks = document.querySelectorAll('.titles a.active');
@@ -48,13 +47,13 @@ const optArticleTagSelector = '.post-tags .list';
 function generateTitleLinks(customSelector = ''){
 
   /* remove contents of titleList */
-  const titleList = document.querySelector(optTitleListSelector + customSelector);
+  const titleList = document.querySelector(optTitleListSelector);
   titleList.innerHTML = '';
   
   let html='';
 
   /* for each article */
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(optArticleSelector + customSelector);
   for(let article of articles){
     
     /* get the article id */
@@ -137,7 +136,7 @@ function tagClickHandler(event){
   const tag = href.replace('#tag-', '');
 
   /* find all tag links with class active */
-  const activeTagLinks = optArticleTagSelector.querySelectorAll('a.active[href^="#tag-"]');
+  const activeTagLinks = document.querySelectorAll('a.active[href^="#tag-"]');
 
   /* START LOOP: for each active tag link */
   for(let activeTagLink of activeTagLinks){
