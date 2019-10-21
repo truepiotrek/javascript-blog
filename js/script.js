@@ -123,7 +123,7 @@ function generateTags(){
   /* END LOOP: for every article: */ 
   }
 }
-generateTags();
+generateTags()
 
 function tagClickHandler(event){
   /* prevent default action for this event */
@@ -136,18 +136,15 @@ function tagClickHandler(event){
   const href = clickedElement.getAttribute('href');
   
   /* make a new constant "tag" and extract tag from the "href" constant */
-  const tag = clickedElement.getAttribute('href');
+  const tag = href.getAttribute('innerHTML');
   console.log(tag);
-
+  
   /* find all tag links with class active */
   const activeTagLinks = tag.querySelectorAll('a.active[href^="#tag-"]');
-
   /* START LOOP: for each active tag link */
   for(let activeTagLink of activeTagLinks){
-
     /* remove class active */
     activeTagLink.classList.remove('active');
-
   /* END LOOP: for each active tag link */
   }
   /* find all tag links with "href" attribute equal to the "href" constant */
@@ -157,21 +154,15 @@ function tagClickHandler(event){
     
     /* add class active */
     activeLink.classList.add('active');
-
   /* END LOOP: for each found tag link */
   }
   /* execute function "generateTitleLinks" with article selector as argument */
 }
 generateTitleLinks ();
-
 function addClickListenersToTags(){
   /* find all links to tags */
-
   /* START LOOP: for each link */
-
     /* add tagClickHandler as event listener for that link */
-
   /* END LOOP: for each link */
 }
-
 addClickListenersToTags();
