@@ -136,9 +136,9 @@ function tagClickHandler(event){
   const href = clickedElement.getAttribute('href');
   
   /* make a new constant "tag" and extract tag from the "href" constant */
-  const tag = href.getAttribute('innerHTML');
+  const tag = href.replace('#tag-', '');
   console.log(tag);
-  
+
   /* find all tag links with class active */
   const activeTagLinks = tag.querySelectorAll('a.active[href^="#tag-"]');
   /* START LOOP: for each active tag link */
