@@ -117,7 +117,7 @@ function generateTags(){
   /* END LOOP: for every article: */ 
   }
 }
-generateTags()
+generateTags();
 
 function tagClickHandler(event){
   /* prevent default action for this event */
