@@ -147,6 +147,8 @@ function tagClickHandler(event){
   /* find all tag links with "href" attribute equal to the "href" constant */
   const activeLinks = document.querySelectorAll('a[href="' + href + '"]');
 
+  console.log(activeLinks);
+
   /* START LOOP: for each found tag link */
   for(let activeLink of activeLinks){
     
@@ -179,24 +181,33 @@ function generateAuthors(){
   const articles = document.querySelectorAll(optArticleSelector);
   for(let article of articles){
     const authorWrapper = article.querySelector('.post-author');
-    let html ='';
     const articleAuthor = article.getAttribute('data-author');
-    const authorHTML = '<li><a href="#author-' +  articleAuthor + '">' + 'by '+ articleAuthor + '</a></li>';
-    html = html + authorHTML;
-    authorWrapper.innerHTML = html;
+    let anchor = document.createElement('a');
+    anchor.setAttribute('href', '#author-' +  articleAuthor);
+    anchor.innerHTML = 'by ' + articleAuthor;
+    anchor.addEventListener('click', authorClickHandler);
+
+    authorWrapper.appendChild(anchor);
   }
 }
 generateAuthors();
 
-function authorClickHandlers(){
-
+function authorClickHandler(event){
+  // console.log('click', event.target);
+  event.preventDefault();
+  const href = event.target.getAttribute('href');
+  const author = href.replace('#author-','');
+  console.log(author);
+  
+  // const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#article-"]');
+  // console.log(sidebarLinks);
+  // for(let sidebarLink of sidebarLinks){
+  //   sidebarLink.classList.remove('active');
+  // }
+  // const activeLinks = document.querySelectorAll('.sidebar a[href="' + author + '"]');
+  // for(let activeLink of activeLinks){
+  //   activeLink.classList.add('active');
+  // }
+  generateTitleLinks('[data-author="' + author + '"]');
 
 }
-
-function addClickListenersToAuthors(){
-  const authorLinks = document.querySelectorAll('.authors a');
-  for(let authorLink of authorLinks){
-    authorLink.addEventListener('click', tagClickHandler);
-  }
-}
-addClickListenersToAuthors();
