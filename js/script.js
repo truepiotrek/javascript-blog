@@ -174,22 +174,6 @@ function addClickListenersToTags(){
 }
 addClickListenersToTags();
 
-function authorClickHandler(event){
-  event.preventDefault();
-  const clickedElement = this;
-  const activeLinks = document.querySelectorAll('.authors a.active');
-  for(let activeLink of activeLinks){
-    activeLink.classList.remove('active');
-  }
-  const activeAuthors = document.querySelectorAll('.authors .active');
-  for(let activeAuthor of activeAuthors){
-    activeAuthor.classList.remove('active');
-  }
-  const authorSelector = clickedElement.getAttribute('href');
-  const targetAuthor = document.querySelector(authorSelector);
-  clickedElement.classList.add('active');
-  targetAuthor.classList.add('active');
-}
 
 function generateAuthors(){
   const articles = document.querySelectorAll(optArticleSelector);
@@ -203,3 +187,16 @@ function generateAuthors(){
   }
 }
 generateAuthors();
+
+function authorClickHandlers(){
+
+
+}
+
+function addClickListenersToAuthors(){
+  const authorLinks = document.querySelectorAll('.authors a');
+  for(let authorLink of authorLinks){
+    authorLink.addEventListener('click', tagClickHandler);
+  }
+}
+addClickListenersToAuthors();
