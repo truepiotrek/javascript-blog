@@ -41,6 +41,28 @@ body {
   }
 }
 
+.tag-size-1 {
+  font-size: 100%;
+  color: blue;
+}
+.tag-size-2 {
+  font-size: 120%;
+  color: pink;
+}
+.tag-size-3 {
+  font-size: 140%;
+  color: orange;
+}
+.tag-size-4 {
+  font-size: 160%;
+  color: tomato;
+}
+.tag-size-5 {
+  font-size: 180%;
+  color: green;
+}
+
+
 /* Layout */
 
 .wrapper {
@@ -84,6 +106,10 @@ body {
     font-weight: bold;
   }
 }
+.tags li{
+  display: inline-block;
+  margin: 3px;
+}
 
 .list-horizontal {
   li {
@@ -120,4 +146,5 @@ body {
     margin: 0 10px 0 0;
   }
 }
+
 

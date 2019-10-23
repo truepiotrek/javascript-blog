@@ -40,9 +40,11 @@ function titleClickHandler(event){
 
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
-  optTitleListSelector = '.titles';
-const optArticleTagSelector = '.post-tags .list';
-const optTagsListSelector = '.tags .list';
+  optTitleListSelector = '.titles',
+  optArticleTagSelector = '.post-tags .list',
+  optTagsListSelector = '.tags .list',
+  optCloudClassCount = 5,
+  optCloudClassPrefix = 'tag-size-';
 
 
 
@@ -97,6 +99,14 @@ function calculateTagsParams(tags){
     }
   }
   return params;
+}
+
+function calculateTagClass(count, params){
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1);
+  return optCloudClassPrefix + classNumber;
 }
 
 function generateTags(){
@@ -158,7 +168,9 @@ function generateTags(){
   for(let tag in allTags){
 
     //[NEW] Generate code of a link and add it to allTagsHTML
-    allTagsHTML += '<li><a href="#' + tag + '"><span>' + tag + ' (' + allTags[tag] + ')' + '</span></a></li>';
+    const tagLinkHTML = '<li><a href="#' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '"><span>' + tag + '</span></a></li>';
+    console.log('tagLinkHTML:', tagLinkHTML);
+    allTagsHTML += tagLinkHTML;
   }
   // [NEW] add html from allTagsHTML to tagList
   tagList.innerHTML = allTagsHTML;
