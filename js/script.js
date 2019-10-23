@@ -236,6 +236,7 @@ addClickListenersToTags();
 
 
 function generateAuthors(){
+  // let authorsList = {};
   const articles = document.querySelectorAll(optArticleSelector);
   for(let article of articles){
     const authorWrapper = article.querySelector('.post-author');
