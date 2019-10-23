@@ -236,7 +236,6 @@ addClickListenersToTags();
 
 
 function generateAuthors(){
-  // let authorsList = {};
   const articles = document.querySelectorAll(optArticleSelector);
   for(let article of articles){
     const authorWrapper = article.querySelector('.post-author');
@@ -245,14 +244,12 @@ function generateAuthors(){
     anchor.setAttribute('href', '#author-' +  articleAuthor);
     anchor.innerHTML = 'by ' + articleAuthor;
     anchor.addEventListener('click', authorClickHandler);
-
     authorWrapper.appendChild(anchor);
   }
 }
 generateAuthors();
 
 function authorClickHandler(event){
-  // console.log('click', event.target);
   event.preventDefault();
   const href = event.target.getAttribute('href');
   const author = href.replace('#author-','');
