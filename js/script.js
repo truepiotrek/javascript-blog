@@ -168,12 +168,14 @@ function generateTags(){
   for(let tag in allTags){
 
     //[NEW] Generate code of a link and add it to allTagsHTML
-    const tagLinkHTML = '<li><a href="#' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '"><span>' + tag + '</span></a></li>';
+    const tagLinkHTML = '<li><a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '"><span>' + tag + '</span></a></li>';
+    
     // console.log('tagLinkHTML:', tagLinkHTML);
     allTagsHTML += tagLinkHTML;
   }
   // [NEW] add html from allTagsHTML to tagList
   tagList.innerHTML = allTagsHTML;
+  addClickListenersToTags();
 }
 generateTags();
 
@@ -183,6 +185,8 @@ function tagClickHandler(event){
   
   /* make new constant named "clickedElement" and give it the value of "this" */
   const clickedElement = this;  
+  console.log(clickedElement);
+  console.log(event.target);
   
   /* make a new constant "href" and read the attribute "href" of the clicked element */
   const href = clickedElement.getAttribute('href');
@@ -221,8 +225,8 @@ function tagClickHandler(event){
 
 function addClickListenersToTags(){
   /* find all links to tags */
-  const articleLinks = document.querySelectorAll('.post-tags a');
-
+  const articleLinks = document.querySelectorAll('.post-tags a, .list.tags a');
+  console.log(articleLinks);
   /* START LOOP: for each link */
   for(let articleLink of articleLinks){
 
@@ -232,7 +236,7 @@ function addClickListenersToTags(){
   /* END LOOP: for each link */
   }
 }
-addClickListenersToTags();
+
 
 function createAnchor(hrefParam, content){
   let anchor = document.createElement('a');
