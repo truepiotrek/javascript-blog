@@ -257,9 +257,12 @@ function generateAuthors(){
     authorWrapper.appendChild(anchor);
 
     // sprawdzam, czy w obiekcie jest juz moj autor; jesli tak, to doliczam 1 do wystepowania, jezeli nie, to go tam wkladam
+<<<<<<< HEAD
     authorsList = {
       Jerzy: 'Red',
     }
+=======
+>>>>>>> handlebars
     // const name = authorsList.Jerzy
     // const name = authorsList['Jerzy']
     // const variableName = 'Jerzy'
@@ -291,15 +294,15 @@ function authorClickHandler(event){
   const author = href.replace('#author-','');
   console.log(author);
   
-  // const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#article-"]');
+  const authorLinks = document.querySelectorAll('.authors a[href^="#author-"]');
   // console.log(sidebarLinks);
-  // for(let sidebarLink of sidebarLinks){
-  //   sidebarLink.classList.remove('active');
-  // }
-  // const activeLinks = document.querySelectorAll('.sidebar a[href="' + author + '"]');
-  // for(let activeLink of activeLinks){
-  //   activeLink.classList.add('active');
-  // }
+  for(let authorLink of authorLinks){
+    authorLink.classList.remove('active');
+  }
+  const activeAuthorLinks = document.querySelectorAll('.authors a[href="' + author + '"]');
+  for(let activeAuthorLink of activeAuthorLinks){
+    activeAuthorLink.classList.add('active');
+  }
   generateTitleLinks('[data-author="' + author + '"]');
 
 }
