@@ -1,12 +1,5 @@
 'use strict';
 
-const templates = {
-  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
-  tagSoupLink: Handlebars.compile(document.querySelector('#template-tag-soup-link').innerHTML),
-  tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
-}
-
-
 function titleClickHandler(event){
   event.preventDefault();
   const clickedElement = this;  
@@ -77,8 +70,7 @@ function generateTitleLinks(customSelector = ''){
     
 
     /* create HTML of the link */
-    const linkHTMLData = {id: articleId, title: articleTitle};
-    const linkHTML = templates.articleLink(linkHTMLData);
+    const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
 
     /* insert link into titleList */
     html = html + linkHTML;
@@ -144,16 +136,13 @@ function generateTags(){
     for(let tag of articleTagsArray) {
       
       /* generate HTML of the link */
-      // const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
-      const linkHTML = templates.tagLink({
-        tag: tag, 
-    })
+      const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
       
       /* add generated code to html variable */
       html = html + linkHTML;
 
       // [NEW] check if this link is NOT already in allTags
-      if(!allTags.hasOwnProperty(tag)){
+      if(!allTags[tag]){
 
         // [NEW] add tag to allTags object
         allTags[tag] = 1;
@@ -179,11 +168,7 @@ function generateTags(){
   for(let tag in allTags){
 
     //[NEW] Generate code of a link and add it to allTagsHTML
-    const tagLinkHTML = templates.tagSoupLink({
-      href: 'tag-' + tag, 
-      class: calculateTagClass(allTags[tag], tagsParams),
-      title: tag,
-  })
+    const tagLinkHTML = '<li><a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '"><span>' + tag + '</span></a></li>';
     
     // console.log('tagLinkHTML:', tagLinkHTML);
     allTagsHTML += tagLinkHTML;
@@ -272,7 +257,12 @@ function generateAuthors(){
     authorWrapper.appendChild(anchor);
 
     // sprawdzam, czy w obiekcie jest juz moj autor; jesli tak, to doliczam 1 do wystepowania, jezeli nie, to go tam wkladam
-    if(authorsList.hasOwnProperty(articleAuthor)){
+    // const name = authorsList.Jerzy
+    // const name = authorsList['Jerzy']
+    // const variableName = 'Jerzy'
+    // const name = authorsList.Jerzy
+
+    if(authorsList[articleAuthor]){
       authorsList[articleAuthor]++;
     } else {
       authorsList[articleAuthor] = 1;
@@ -298,15 +288,15 @@ function authorClickHandler(event){
   const author = href.replace('#author-','');
   console.log(author);
   
-  // const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#article-"]');
+  const authorLinks = document.querySelectorAll('.authors a[href^="#author-"]');
   // console.log(sidebarLinks);
-  // for(let sidebarLink of sidebarLinks){
-  //   sidebarLink.classList.remove('active');
-  // }
-  // const activeLinks = document.querySelectorAll('.sidebar a[href="' + author + '"]');
-  // for(let activeLink of activeLinks){
-  //   activeLink.classList.add('active');
-  // }
+  for(let authorLink of authorLinks){
+    authorLink.classList.remove('active');
+  }
+  const activeAuthorLinks = document.querySelectorAll('.authors a[href="' + author + '"]');
+  for(let activeAuthorLink of activeAuthorLinks){
+    activeAuthorLink.classList.add('active');
+  }
   generateTitleLinks('[data-author="' + author + '"]');
 
 }
