@@ -1,5 +1,12 @@
 'use strict';
 
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  tagSoupLink: Handlebars.compile(document.querySelector('#template-tag-soup-link').innerHTML),
+  tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
+}
+
+
 function titleClickHandler(event){
   event.preventDefault();
   const clickedElement = this;  
@@ -70,7 +77,8 @@ function generateTitleLinks(customSelector = ''){
     
 
     /* create HTML of the link */
-    const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+    const linkHTMLData = {id: articleId, title: articleTitle};
+    const linkHTML = templates.articleLink(linkHTMLData);
 
     /* insert link into titleList */
     html = html + linkHTML;
@@ -136,7 +144,10 @@ function generateTags(){
     for(let tag of articleTagsArray) {
       
       /* generate HTML of the link */
-      const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+      // const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+      const linkHTML = templates.tagLink({
+        tag: tag, 
+    })
       
       /* add generated code to html variable */
       html = html + linkHTML;
@@ -168,7 +179,11 @@ function generateTags(){
   for(let tag in allTags){
 
     //[NEW] Generate code of a link and add it to allTagsHTML
-    const tagLinkHTML = '<li><a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '"><span>' + tag + '</span></a></li>';
+    const tagLinkHTML = templates.tagSoupLink({
+      href: 'tag-' + tag, 
+      class: calculateTagClass(allTags[tag], tagsParams),
+      title: tag,
+  })
     
     // console.log('tagLinkHTML:', tagLinkHTML);
     allTagsHTML += tagLinkHTML;
