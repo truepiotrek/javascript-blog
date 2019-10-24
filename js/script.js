@@ -1,10 +1,10 @@
 'use strict';
-
+/* global Handlebars */
 const templates = {
   articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
   tagSoupLink: Handlebars.compile(document.querySelector('#template-tag-soup-link').innerHTML),
   tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
-}
+};
 function titleClickHandler(event){
   event.preventDefault();
   const clickedElement = this;  
