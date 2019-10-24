@@ -91,7 +91,7 @@ function calculateTagsParams(tags){
     max: 0
   };
   for(let tag in tags){
-    console.log(tag + ' is used ' + tags[tag] + ' times');
+    // console.log(tag + ' is used ' + tags[tag] + ' times');
     if(tags[tag] > params.max){
       params.max = tags[tag];
     } if(tags[tag] < params.min){
@@ -159,7 +159,7 @@ function generateTags(){
   const tagList = document.querySelector('.tags');
 
   const tagsParams = calculateTagsParams(allTags);
-  console.log('tagsParams:',tagsParams);
+  // console.log('tagsParams:',tagsParams);
   /* [NEW] create variable for all links HTML code */
   let allTagsHTML = '';
   
@@ -169,7 +169,7 @@ function generateTags(){
 
     //[NEW] Generate code of a link and add it to allTagsHTML
     const tagLinkHTML = '<li><a href="#' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '"><span>' + tag + '</span></a></li>';
-    console.log('tagLinkHTML:', tagLinkHTML);
+    // console.log('tagLinkHTML:', tagLinkHTML);
     allTagsHTML += tagLinkHTML;
   }
   // [NEW] add html from allTagsHTML to tagList
@@ -205,7 +205,7 @@ function tagClickHandler(event){
   /* find all tag links with "href" attribute equal to the "href" constant */
   const activeLinks = document.querySelectorAll('a[href="' + href + '"]');
 
-  console.log(activeLinks);
+  // console.log(activeLinks);
 
   /* START LOOP: for each found tag link */
   for(let activeLink of activeLinks){
@@ -234,17 +234,41 @@ function addClickListenersToTags(){
 }
 addClickListenersToTags();
 
+function createAnchor(hrefParam, content){
+  let anchor = document.createElement('a');
+  anchor.setAttribute('href', hrefParam);
+  anchor.innerHTML = content;
+  return anchor;
+}
 
 function generateAuthors(){
-  const articles = document.querySelectorAll(optArticleSelector);
-  for(let article of articles){
+  let authorsList = {};
+  // tutaj przegladam artykuly, szukam wrappera dla autora i odnajduje go w divie po atrybucie data-author
+  for(let article of document.querySelectorAll(optArticleSelector)){
     const authorWrapper = article.querySelector('.post-author');
     const articleAuthor = article.getAttribute('data-author');
-    let anchor = document.createElement('a');
-    anchor.setAttribute('href', '#author-' +  articleAuthor);
-    anchor.innerHTML = 'by ' + articleAuthor;
+    
+    let anchor = createAnchor('#author-' +  articleAuthor, 'by ' + articleAuthor);
     anchor.addEventListener('click', authorClickHandler);
     authorWrapper.appendChild(anchor);
+
+    // sprawdzam, czy w obiekcie jest juz moj autor; jesli tak, to doliczam 1 do wystepowania, jezeli nie, to go tam wkladam
+    if(authorsList.hasOwnProperty(articleAuthor)){
+      authorsList[articleAuthor]++;
+    } else {
+      authorsList[articleAuthor] = 1;
+    }
+  }
+  
+  console.log(authorsList);
+  const authorsWrapper = document.querySelector('ul.authors'); //wskazuje miejsce do trzymania listy z autorami
+
+  for(let indexAuthor in authorsList) { // przechodze po tablicy po poszczegolnych indexach
+    let listPosition = document.createElement('li'); //tworze nowe li dla autora
+    let anchor = createAnchor('#author-' + indexAuthor, indexAuthor + ' (' + authorsList[indexAuthor] + ')');
+    anchor.addEventListener('click', authorClickHandler); // zarzdza filtrowaniem artykulow w lewym sidebarze
+    listPosition.appendChild(anchor); // do li wkladam link z autorem
+    authorsWrapper.appendChild(listPosition); //tutaj juz wkladam wlasciwy link do wrappera
   }
 }
 generateAuthors();
