@@ -142,7 +142,7 @@ function generateTags(){
       html = html + linkHTML;
 
       // [NEW] check if this link is NOT already in allTags
-      if(!allTags.hasOwnProperty(tag)){
+      if(!allTags[tag]){
 
         // [NEW] add tag to allTags object
         allTags[tag] = 1;
@@ -257,7 +257,15 @@ function generateAuthors(){
     authorWrapper.appendChild(anchor);
 
     // sprawdzam, czy w obiekcie jest juz moj autor; jesli tak, to doliczam 1 do wystepowania, jezeli nie, to go tam wkladam
-    if(authorsList.hasOwnProperty(articleAuthor)){
+    authorsList = {
+      Jerzy: 'Red',
+    }
+    // const name = authorsList.Jerzy
+    // const name = authorsList['Jerzy']
+    // const variableName = 'Jerzy'
+    // const name = authorsList.Jerzy
+
+    if(authorsList[articleAuthor]){
       authorsList[articleAuthor]++;
     } else {
       authorsList[articleAuthor] = 1;
