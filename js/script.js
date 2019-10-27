@@ -287,7 +287,11 @@ function generateAuthors(){
     anchorList = anchorList + authorLinkHTML;
   }
   authorsWrapper.innerHTML = anchorList;
-  authorsWrapper.addEventListener('click', authorClickHandler);
+
+  const linksForAuthor = authorsWrapper.querySelectorAll('a');
+  for(let link of linksForAuthor){
+    link.addEventListener('click', authorClickHandler);
+  }
 }
 generateAuthors();
 
