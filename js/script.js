@@ -4,6 +4,8 @@ const templates = {
   articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
   tagSoupLink: Handlebars.compile(document.querySelector('#template-tag-soup-link').innerHTML),
   tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
+  authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
+  authorSoupLink: Handlebars.compile(document.querySelector('#template-authorSoup-link').innerHTML),
 };
 function titleClickHandler(event){
   event.preventDefault();
@@ -47,7 +49,7 @@ const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
   optArticleTagSelector = '.post-tags .list',
-  optTagsListSelector = '.tags .list',
+  // optTagsListSelector = '.tags .list',
   optCloudClassCount = 5,
   optCloudClassPrefix = 'tag-size-';
 
@@ -194,8 +196,8 @@ function tagClickHandler(event){
   
   /* make new constant named "clickedElement" and give it the value of "this" */
   const clickedElement = this;  
-  console.log(clickedElement);
-  console.log(event.target);
+  // console.log(clickedElement);
+  // console.log(event.target);
   
   /* make a new constant "href" and read the attribute "href" of the clicked element */
   const href = clickedElement.getAttribute('href');
@@ -235,7 +237,7 @@ function tagClickHandler(event){
 function addClickListenersToTags(){
   /* find all links to tags */
   const articleLinks = document.querySelectorAll('.post-tags a, .list.tags a');
-  console.log(articleLinks);
+  // console.log(articleLinks);
   /* START LOOP: for each link */
   for(let articleLink of articleLinks){
 
@@ -246,25 +248,21 @@ function addClickListenersToTags(){
   }
 }
 
-
-function createAnchor(hrefParam, content){
-  let anchor = document.createElement('a');
-  anchor.setAttribute('href', hrefParam);
-  anchor.innerHTML = content;
-  return anchor;
-}
-
 function generateAuthors(){
   let authorsList = {};
   // tutaj przegladam artykuly, szukam wrappera dla autora i odnajduje go w divie po atrybucie data-author
   for(let article of document.querySelectorAll(optArticleSelector)){
-    const authorWrapper = article.querySelector('.post-author');
-    const articleAuthor = article.getAttribute('data-author');
     
-    let anchor = createAnchor('#author-' +  articleAuthor, 'by ' + articleAuthor);
-    anchor.addEventListener('click', authorClickHandler);
-    authorWrapper.appendChild(anchor);
+    const articleAuthor = article.getAttribute('data-author');
+    const authorHTMLData = {href: articleAuthor, author: articleAuthor};
 
+    const authorHTML = templates.authorLink(authorHTMLData);
+
+    const authorWrapper = article.querySelector('.post-author');
+    authorWrapper.innerHTML = authorHTML;
+
+    let anchor = authorWrapper.querySelector('a');
+    anchor.addEventListener('click', authorClickHandler);
     // sprawdzam, czy w obiekcie jest juz moj autor; jesli tak, to doliczam 1 do wystepowania, jezeli nie, to go tam wkladam
     // const name = authorsList.Jerzy
     // const name = authorsList['Jerzy']
@@ -278,27 +276,29 @@ function generateAuthors(){
     }
   }
   
-  console.log(authorsList);
+  // console.log(authorsList);
   const authorsWrapper = document.querySelector('ul.authors'); //wskazuje miejsce do trzymania listy z autorami
+  let anchorList = '';
 
   for(let indexAuthor in authorsList) { // przechodze po tablicy po poszczegolnych indexach
-    let listPosition = document.createElement('li'); //tworze nowe li dla autora
-    let anchor = createAnchor('#author-' + indexAuthor, indexAuthor + ' (' + authorsList[indexAuthor] + ')');
-    anchor.addEventListener('click', authorClickHandler); // zarzdza filtrowaniem artykulow w lewym sidebarze
-    listPosition.appendChild(anchor); // do li wkladam link z autorem
-    authorsWrapper.appendChild(listPosition); //tutaj juz wkladam wlasciwy link do wrappera
+
+    const authorSoupHTMLData = {href: indexAuthor, author: indexAuthor + ' (' + authorsList[indexAuthor] + ')'};
+    const authorLinkHTML = templates.authorSoupLink(authorSoupHTMLData);
+    anchorList = anchorList + authorLinkHTML;
   }
+  authorsWrapper.innerHTML = anchorList;
+  authorsWrapper.addEventListener('click', authorClickHandler);
 }
 generateAuthors();
 
 function authorClickHandler(event){
   event.preventDefault();
   const href = event.target.getAttribute('href');
+  console.log(event.target);
   const author = href.replace('#author-','');
   console.log(author);
   
   const authorLinks = document.querySelectorAll('.authors a[href^="#author-"]');
-  // console.log(sidebarLinks);
   for(let authorLink of authorLinks){
     authorLink.classList.remove('active');
   }

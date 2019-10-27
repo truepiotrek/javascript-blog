@@ -186,26 +186,6 @@
                         </ul>
                         <h2 class="section-title">Authors</h2>
                         <ul class="list authors">
-                        <!-- <li>
-                            <a href="#">
-                            <span class="author-name">Kitty Toebean</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                            <span class="author-name">Theo Tabby</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                            <span class="author-name">George Tuxedo</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                            <span class="author-name">Marion Berry</span>
-                            </a>
-                        </li> -->
                         </ul>
                     </aside>
                     </main>
@@ -219,6 +199,12 @@
                 </script>
                 <script id="template-tag-link" type="text/x-handlebars-template">
                     <li><a href="#tag-{{ tag }}">{{ tag }}</a></li>
+                </script>
+                <script id="template-author-link" type="text/x-handlebars-template">
+                    <a href="#author-{{ href }}">by {{ author }}</<a>
+                </script>
+                <script id="template-authorSoup-link" type="text/x-handlebars-template">
+                    <li><a href="#author-{{ href }}">{{ author }}</a></li>
                 </script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
             <script src="js/script.js"></script>
