@@ -266,12 +266,7 @@ function generateAuthors(){
     authorWrapper.appendChild(anchor);
 
     // sprawdzam, czy w obiekcie jest juz moj autor; jesli tak, to doliczam 1 do wystepowania, jezeli nie, to go tam wkladam
-<<<<<<< HEAD
-    authorsList = {
-      Jerzy: 'Red',
-    }
-=======
->>>>>>> handlebars
+
     // const name = authorsList.Jerzy
     // const name = authorsList['Jerzy']
     // const variableName = 'Jerzy'
